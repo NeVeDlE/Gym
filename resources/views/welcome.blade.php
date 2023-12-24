@@ -22,11 +22,19 @@
     </head>
     <body>
     <div>
-        <h1>El Gym Da Gamed Gedan</h1>
+        <h1>El Gym Da Gamed Gedan @if(auth()->user()) <p style="color: blue"> Ya {{auth()->user()->name}} </p>@endif</h1>
+       @if(!auth()->user())
         <div style="align-self: center;margin-left: 30px">
-        <a href="#"><h3 style="color: blueviolet">-> لو عاوز تشترك دوس هنا</h3></a>
-            <a href="#"><h3 style="color: green">-> لو مشترك قبل كدا وعاوز تدخل صفحتك دوس هنا</h3></a>
+        <a href="/register"><h3 style="color: blueviolet">-> لو عاوز تشترك دوس هنا</h3></a>
+            <a href="/login"><h3 style="color: green">-> لو مشترك قبل كدا وعاوز تدخل صفحتك دوس هنا</h3></a>
         </div>
+        @endif
+        @if(auth()->user())
+            <form action="/logout" method="get">
+                @csrf
+            <button type="submit" style="color: red"><a href="/logout">Log out!</a></button>
+            </form>
+        @endif
 
     </div>
 
