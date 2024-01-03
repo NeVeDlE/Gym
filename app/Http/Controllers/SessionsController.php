@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class SessionsController extends Controller
 {
@@ -22,11 +23,12 @@ class SessionsController extends Controller
         ]);
         $email = $atr['email'];
         $password = $atr['password'];
-        $user = User::where('email', $email)->where('password', $password)->first();
-        if ($user) {
+        $user = User::where('email', $email)->first();
+        if(Hash::check($password,$user->password)){
             auth()->login($user);
             return redirect('/');
         }
+      else
         throw ValidationException::withMessages(['email' => 'Your provided credentials could not be verified.']);
     }
 

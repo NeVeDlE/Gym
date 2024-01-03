@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Membership;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -16,7 +18,10 @@ class RegisterController extends Controller
            'email'=>'required|email|max:255|unique:users,email',
            'password'=>'required|min:7|max:255',
         ]);
+        $atr['password']=Hash::make($atr['password']);
         $user=User::create($atr);
+       $mm= Membership::create(['owner_id'=>$user->id]);
+
         auth()->login($user);
         return redirect('/');
     }

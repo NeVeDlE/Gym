@@ -15,6 +15,21 @@
         </style>
 
         <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
             body {
                 font-family: 'Nunito', sans-serif;
             }
@@ -23,13 +38,21 @@
     <body>
     <div>
         <h1>El Gym Da Gamed Gedan @if(auth()->user()) <p style="color: blue"> Ya {{auth()->user()->name}} </p>@endif</h1>
-       @if(!auth()->user())
+       @if(!auth()->check())
         <div style="align-self: center;margin-left: 30px">
         <a href="/register"><h3 style="color: blueviolet">-> لو عاوز تشترك دوس هنا</h3></a>
             <a href="/login"><h3 style="color: green">-> لو مشترك قبل كدا وعاوز تدخل صفحتك دوس هنا</h3></a>
         </div>
         @endif
-        @if(auth()->user())
+        @if(auth()->check())
+            @if(auth()->user()->role_id==1)
+                <x-admin :users="$users"/>
+            @endif
+            @if(auth()->user()->membership->active)
+                <h4 style="color: green">الاشتراك فعال </h4>
+            @else
+                <h4 style="color: red">الاشتراك غير فعال </h4>
+            @endif
             <form action="/logout" method="get">
                 @csrf
             <button type="submit" style="color: red"><a href="/logout">Log out!</a></button>
