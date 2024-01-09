@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Models\User;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\CoachController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,17 @@ use App\Http\Controllers\MembershipController;
 Route::get('/', function () {
     if (auth()->check()) {
         if (auth()->user()->role_id == 1) {
+          $search=  isset ($search) ? "":request()->search;
             return view('welcome', [
-                'users' => User::where('id', '!=', auth()->id())->paginate(10),
+                'users' => User::where('id', '!=', auth()->id())->Filter($search)->paginate(10),
+                'search'=>$search,
             ]);
         } else  return view('welcome');
     } else
         return view('welcome');
 });
+Route::get('/coaches',[CoachController::class,'index']);
+Route::post('/coaches/{user:id}/{type}',[CoachController::class,'update']);
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/login', [SessionsController::class, 'create']);

@@ -17,11 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,6 +44,18 @@ class User extends Authenticatable
     public function membership()
     {
         return $this->hasOne(Membership::Class, 'owner_id');
+    }
+    public function scopeFilter($query,$search)
+    {
+        return $query->where('name','like','%'.$search.'%');
+    }
+    public function promoteCoach()
+    {
+        return $this->update(['role_id'=>2]);
+    }
+    public function demoteCoach()
+    {
+        return $this->update(['role_id'=>3]);
     }
 
 

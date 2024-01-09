@@ -24,7 +24,7 @@ class SessionsController extends Controller
         $email = $atr['email'];
         $password = $atr['password'];
         $user = User::where('email', $email)->first();
-        if(Hash::check($password,$user->password)){
+        if(isset($user)&&Hash::check($password,$user->password)){
             auth()->login($user);
             return redirect('/');
         }

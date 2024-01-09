@@ -34,6 +34,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+
     </head>
     <body>
     <div>
@@ -46,7 +47,7 @@
         @endif
         @if(auth()->check())
             @if(auth()->user()->role_id==1)
-                <x-admin :users="$users"/>
+                <x-admin :users="$users" :search="$search"/>
             @endif
             @if(auth()->user()->membership->active)
                 <h4 style="color: green">الاشتراك فعال </h4>
@@ -60,6 +61,7 @@
         @endif
 
     </div>
+
 
     </body>
 </html>

@@ -27,6 +27,13 @@ class DatabaseSeeder extends Seeder
             'password'=>Hash::make('1234567'),
             'role_id'=>'1',
         ])->membership()->create();
+
+        User::factory()->create([
+            'name'=>'Omar Ahmed',
+            'email'=>'shaherabdullah2001@gmail.com',
+            'password'=>Hash::make('1234567'),
+            'role_id'=>'2',
+        ])->membership()->create();
      for($i=0;$i<10;$i++) {
          User::factory()->create()->membership()->create();
      }
