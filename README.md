@@ -32,7 +32,7 @@ composer install
 
 
 
-2. open the .env file in the project and make DB_DATABASE=roshta 
+2. open the .env file in the project and make DB_DATABASE=gym
     - after that run this command to generate the key
     note: run the command above in the first time only
         ```bash
